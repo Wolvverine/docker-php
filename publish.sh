@@ -13,7 +13,7 @@ PRODUCTION_BRANCH=${PRODUCTION_BRANCH:-master}
 set -e
 set -x
 
-if [[ ${DOCKER_IMAGE} =~ ([^/]+)/([^/]+) ]]; then
+if [[ ${DOCKER_REPO} =~ ([^/]+)/([^/]+) ]]; then
   username=${BASH_REMATCH[1]}
   repo=${BASH_REMATCH[2]}
   echo "-> set username to '${username}'"
