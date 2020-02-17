@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+cd ~/build/Wolvverine/docker-php/${VERSION}
 APP_NAME="php"
 
 ## Global settings
@@ -28,14 +29,13 @@ if [[ -z "$DOCKERHUB_REGISTRY_USERNAME" || -z "$DOCKERHUB_REGISTRY_PASSWORD" ]];
 fi
 
 image_version=${VERSION}
-cd ~/build/Wolvverine/docker-php/${VERSION}
+
 if [[ -n ${IMAGE_VARIANT} ]]; then
-  VARIANT=${VARIANT//\//-}
-  image_building_name="${DOCKER_IMAGE}:${VERSION}-${VARIANT}"
-  image_tags_prefix="${VERSION}-${VARIANT}-"
+  image_building_name="${DOCKER_IMAGE}:${VERSION}-${VARIANT//\//-}"
+  image_tags_prefix="${VERSION}-${VARIANT//\//-}-"
   echo "-> set image variant '${VARIANT}' for build"
 else
-  image_building_name="${DOCKER_IMAGE}:${VERSION}-${VARIANT}"
+  image_building_name="${DOCKER_IMAGE}:${VERSION}-${VARIANT//\//-}"
 fi
 echo "-> use image name '${image_building_name}' for publish"
 
