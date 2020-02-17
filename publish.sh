@@ -76,7 +76,11 @@ image_final_tags=()
 for tag in $image_tags; do
   image_final_tags+=("${image_tags_prefix}${tag}")
 done
+image_final_tags+=("latest")
+echo -n "${image_final_tags[*]}"
+
 image_final_tags=`echo -n "${image_final_tags[*]}" | tr ' ' '\n' | uniq | tr '\n' ' '`
+
 echo "-> use final image tags list '${image_final_tags}'"
 
 ## Enforce versioning
