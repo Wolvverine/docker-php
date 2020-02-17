@@ -4,7 +4,7 @@ services: docker
 env:
 #  - VERSION=7.4 VARIANT=buster/cli
 #  - VERSION=7.4 VARIANT=buster/apache
-  - VERSION=7.4 VARIANT=buster/fpm
+#  - VERSION=7.4 VARIANT=buster/fpm
 #  - VERSION=7.4 VARIANT=buster/zts
 #  - VERSION=7.4 VARIANT=alpine3.11/cli
   - VERSION=7.4 VARIANT=alpine3.11/fpm
