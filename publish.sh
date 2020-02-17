@@ -4,7 +4,7 @@ APP_NAME="php"
 
 ## Global settings
 # image name
-DOCKER_IMAGE="docker-${APP_NAME}"
+DOCKER_IMAGE="${APP_NAME}"
 # "production" branch
 PRODUCTION_BRANCH=${PRODUCTION_BRANCH:-master}
 
@@ -29,14 +29,15 @@ if [[ -z "$DOCKERHUB_REGISTRY_USERNAME" || -z "$DOCKERHUB_REGISTRY_PASSWORD" ]];
 fi
 
 image_version=${VERSION}
-
+VARIANT_TAG=${VARIANT//\//-}
 if [[ -n ${VARIANT} ]]; then
   cd ~/build/Wolvverine/docker-php/${VERSION}/${VARIANT}
-  image_building_name="${DOCKER_IMAGE}:${VERSION}-${VARIANT//\//-}"
-  image_tags_prefix="${VERSION}-${VARIANT//\//-}-"
-  echo "-> set image variant '${VARIANT//\//-}' for build"
+
+  image_building_name="${DOCKER_IMAGE}:${VERSION}-${VARIANT_TAG}"
+  image_tags_prefix="${VERSION}-${VARIANT_TAG}-"
+  echo "-> set image variant '${VARIANT_TAG' for build"
 else
-  image_building_name="${DOCKER_IMAGE}:${VERSION}-${VARIANT//\//-}"
+  image_building_name="${DOCKER_IMAGE}:${VERSION}-${VARIANT_TAG}"
 fi
 echo "-> use image name '${image_building_name}' for publish"
 
@@ -97,7 +98,7 @@ for tag in $image_final_tags; do
   echo "=> tag image '${image_building_name}' as '${DOCKER_IMAGE}:${tag}'"
   docker tag "${image_building_name}" "${DOCKER_IMAGE}:${tag}"
   echo "=> push image '${DOCKER_IMAGE}:${tag}'"
-  docker push "${DOCKER_IMAGE}:${tag}"
+  docker push "${DOCKER_REPO}:${tag}"
 done
 
 ## Logout from registry
