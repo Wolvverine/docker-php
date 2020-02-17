@@ -68,7 +68,8 @@ script:
 after_script:
   - docker images
 #publish:
+  - pwd
   - '[ "$TRAVIS_PULL_REQUEST" == "false" ] || exit 0'
-  - '[ "$TRAVIS_SECURE_ENV_VARS" == "true" ] && ./publish.sh'
+  - '[ "$TRAVIS_SECURE_ENV_VARS" == "true" ] && ~/build/Wolvverine/docker-php/publish.sh'
 
 # vim:set et ts=2 sw=2:
