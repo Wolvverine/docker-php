@@ -28,7 +28,7 @@ if [[ -z "$DOCKERHUB_REGISTRY_USERNAME" || -z "$DOCKERHUB_REGISTRY_PASSWORD" ]];
 fi
 
 image_version=${VERSION}
-VARIANT=${VARIANT//\/-}
+VARIANT=${VARIANT//\//-}
 if [[ -n ]]; then
   image_building_name="${DOCKER_IMAGE}:${VERSION}-${VARIANT}"
   image_tags_prefix="${VARIANT}-"
