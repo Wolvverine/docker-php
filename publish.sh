@@ -29,7 +29,7 @@ fi
 
 image_version=${VERSION}
 VARIANT=${VARIANT//\//-}
-if [[ -n ]]; then
+if [[ -n ${IMAGE_VARIANT} ]]; then
   image_building_name="${DOCKER_IMAGE}:${VERSION}-${VARIANT}"
   image_tags_prefix="${VARIANT}-"
   echo "-> set image variant '${VARIANT}' for build"
