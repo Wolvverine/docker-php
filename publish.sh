@@ -10,6 +10,7 @@ PRODUCTION_BRANCH=${PRODUCTION_BRANCH:-master}
 
 ## Initialization
 set -e
+set -x
 
 if [[ ${DOCKER_IMAGE} =~ ([^/]+)/([^/]+) ]]; then
   username=${BASH_REMATCH[1]}
@@ -27,9 +28,9 @@ if [[ -z "$DOCKERHUB_REGISTRY_USERNAME" || -z "$DOCKERHUB_REGISTRY_PASSWORD" ]];
 fi
 
 image_version=${VERSION}
-
-if [[ -n ${VARIANT} ]]; then
-  image_building_name="${DOCKER_IMAGE}:building_${VARIANT}"
+VARIANT=${VARIANT//\/-}
+if [[ -n ]]; then
+  image_building_name="${DOCKER_IMAGE}:${VERSION}-${VARIANT}"
   image_tags_prefix="${VARIANT}-"
   echo "-> set image variant '${VARIANT}' for build"
 else
