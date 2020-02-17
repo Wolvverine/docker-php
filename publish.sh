@@ -28,17 +28,18 @@ if [[ -z "$DOCKERHUB_REGISTRY_USERNAME" || -z "$DOCKERHUB_REGISTRY_PASSWORD" ]];
 fi
 
 image_version=${VERSION}
-VARIANT=${VARIANT//\//-}
+cd ~/build/Wolvverine/docker-php/${VERSION}
 if [[ -n ${IMAGE_VARIANT} ]]; then
+  VARIANT=${VARIANT//\//-}
   image_building_name="${DOCKER_IMAGE}:${VERSION}-${VARIANT}"
-  image_tags_prefix="${VARIANT}-"
+  image_tags_prefix="${VERSION}-${VARIANT}-"
   echo "-> set image variant '${VARIANT}' for build"
 else
-  image_building_name="${DOCKER_IMAGE}:building"
+  image_building_name="${DOCKER_IMAGE}:${VERSION}-${VARIANT}"
 fi
 echo "-> use image name '${image_building_name}' for publish"
 
-application_version=`docker inspect -f '{{ index .Config.Labels "application.${APP_NAME}.version"}}' ${image_building_name}`
+application_version=`docker inspect -f '{{ index .Config.Labels "application.php.version"}}' ${image_building_name}`
 
 if [[ -z "$APP_VERSION" ]]; then
   # no fixed application version => latest build
