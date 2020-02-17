@@ -4,7 +4,7 @@ APP_NAME="php"
 
 ## Global settings
 # image name
-DOCKER_IMAGE="${DOCKER_REPO:-${APP_NAME}}"
+DOCKER_IMAGE="docker-${APP_NAME}"
 # "production" branch
 PRODUCTION_BRANCH=${PRODUCTION_BRANCH:-master}
 
@@ -30,10 +30,11 @@ fi
 
 image_version=${VERSION}
 
-if [[ -n ${IMAGE_VARIANT} ]]; then
+if [[ -n ${VARIANT} ]]; then
+  cd ~/build/Wolvverine/docker-php/${VERSION}/${VARIANT}
   image_building_name="${DOCKER_IMAGE}:${VERSION}-${VARIANT//\//-}"
   image_tags_prefix="${VERSION}-${VARIANT//\//-}-"
-  echo "-> set image variant '${VARIANT}' for build"
+  echo "-> set image variant '${VARIANT//\//-}' for build"
 else
   image_building_name="${DOCKER_IMAGE}:${VERSION}-${VARIANT//\//-}"
 fi
@@ -41,14 +42,14 @@ echo "-> use image name '${image_building_name}' for publish"
 
 application_version=`docker inspect -f '{{ index .Config.Labels "application.php.version"}}' ${image_building_name}`
 
-if [[ -z "$APP_VERSION" ]]; then
+if [[ -z "$VERSION" ]]; then
   # no fixed application version => latest build
   image_tags="latest ${application_version}-latest"
 else
   image_tags="${application_version}-latest"
 fi
 
-# If empty branch, fetch the current from local git rpo
+# If empty branch, fetch the current from local git repo
 if [[ -n "${SOURCE_BRANCH}" ]]; then
   VCS_BRANCH="${SOURCE_BRANCH}"
 elif [[ -n "${TRAVIS_BRANCH}" ]]; then
