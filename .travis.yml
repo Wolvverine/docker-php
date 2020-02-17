@@ -69,6 +69,6 @@ after_script:
   - docker images
 #publish:
   - '[ "$TRAVIS_PULL_REQUEST" == "false" ] || exit 0'
-  - '[ "$TRAVIS_SECURE_ENV_VARS" == "true" -a -f _test_ok ] && ./publish.sh'
+  - '[ "$TRAVIS_SECURE_ENV_VARS" == "true" ] && ./publish.sh'
 
 # vim:set et ts=2 sw=2:
