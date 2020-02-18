@@ -100,6 +100,7 @@ echo "$DOCKERHUB_REGISTRY_PASSWORD" | docker login --username="$DOCKERHUB_REGIST
 for tag in $image_final_tags; do
   echo "=> tag image ${image_building_name} as ${DOCKER_IMAGE}:${tag}" ;
   docker tag "${image_building_name}" "${DOCKER_IMAGE}:${tag}" ;
+  docker image tag "${DOCKER_IMAGE}:${tag}" "${DOCKER_REPO}:${tag}"
   echo "=> push image ${DOCKER_IMAGE}:${tag}" ;
   docker push "${DOCKER_REPO}:${tag}" ; 
 done
