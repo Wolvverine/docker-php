@@ -1,16 +1,15 @@
 #!/usr/bin/env bash
 cd "~/build/Wolvverine/docker-php/${VERSION}";
-APP_NAME='php'
+APP_NAME='php' ;
 
 ## Global settings
 # image name
-DOCKER_IMAGE="${APP_NAME}"
+DOCKER_IMAGE="${APP_NAME}" ;
 # "production" branch
-PRODUCTION_BRANCH="${PRODUCTION_BRANCH:-master}"
+PRODUCTION_BRANCH="${PRODUCTION_BRANCH:-master}" ;
 
 ## Initialization
-set -e
-set -x
+set -e -x
 
 if [[ "${DOCKER_REPO}" =~ ([^/]+)/([^/]+) ]]; then
   username="${BASH_REMATCH[1]}";
@@ -27,11 +26,11 @@ if [[ -z "$DOCKERHUB_REGISTRY_USERNAME" || -z "$DOCKERHUB_REGISTRY_PASSWORD" ]];
   exit 1
 fi
 
-image_version="${VERSION}"
-VARIANT_TAG="`${VARIANT/\//-}`" ;
+image_version="${VERSION}";
+VARIANT_TAG="${VARIANT/\//-}";
 
 if [[ -n "${VARIANT}" ]]; then
-  cd "~/build/Wolvverine/docker-php/${VERSION}/${VARIANT}" ;
+  cd "~/build/Wolvverine/docker-php/${VERSION}/${VARIANT}";
   image_building_name="${DOCKER_IMAGE}:${VERSION}-${VARIANT_TAG}";
   image_tags_prefix="${VERSION}-${VARIANT_TAG}-";
   echo "-> set image variant ${VARIANT_TAG for build";
