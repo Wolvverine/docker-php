@@ -17,7 +17,7 @@ if [[ ${DOCKER_REPO} =~ ([^/]+)/([^/]+) ]]; then
   echo "-> set username to ${username}";
   echo "-> set repository to ${repo}";
 else
-  echo "ERROR: unable to extract username and repo from environment" 1>&2;
+  echo 'ERROR: unable to extract username and repo from environment' 1>&2;
   exit 1
 fi
 
@@ -26,7 +26,7 @@ if [[ -z "$DOCKERHUB_REGISTRY_USERNAME" || -z "$DOCKERHUB_REGISTRY_PASSWORD" ]];
   exit 1
 fi
 
-image_version=${VERSION};
+image_version='0.1';
 VARIANT_TAG=${VARIANT/\//-};
 
 if [[ -n "${VARIANT}" ]]; then
@@ -39,9 +39,9 @@ else
 fi
 echo "-> use image name '${image_building_name}' for publish";
 
-docker inspect -f '{{ index .Config.Labels "application.php.version"}}' "${image_building_name}";
+docker inspect "${image_building_name}";
 
-application_version=`docker inspect -f '{{ index .Config.Labels "application.php.version"}}' ${image_building_name}`;
+application_version=`docker inspect -f '{{ index .Config.Labels "application.php.version"}}' "${image_building_name}"`;
 
 if [[ -z "$VERSION" ]]; then
   # no fixed application version => latest build
@@ -77,8 +77,8 @@ echo "-> use image tags ${image_tags}"
    image_final_tags+=("${image_tags_prefix}${tag}");
  done
 
-image_final_tags="$(echo -n "${image_final_tags[*]}" | tr ' ' '\n' | uniq | tr '\n' ' ')";
-echo "-> use final image tags list ${image_final_tags}";
+image_final_tags=`echo -n "${image_final_tags[*]}" | tr ' ' '\n' | uniq | tr '\n' ' '` ;
+echo "-> use final image tags list '${image_final_tags}'" ;
 
 ## Enforce versioning
 for tag in $image_final_tags; do
