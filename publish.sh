@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-cd "~/build/Wolvverine/docker-php/${VERSION}";
 APP_NAME='php' ;
 
 ## Global settings
@@ -39,12 +38,6 @@ else
 fi
 echo "-> use image name '${image_building_name}' for publish";
 
-#docker inspect "${image_building_name}";
-
-#application_version=`docker inspect -f '{{ index .Config.Labels "application.php.version"}}' "${image_building_name}"`;
-
-application_version="${VERSION}-${VARIANT_TAG}";
-
 if [[ -z "$VERSION" ]]; then
   # no fixed application version => latest build
   image_tags="latest" ;
@@ -70,7 +63,7 @@ if [ "${VCS_BRANCH}" != "${PRODUCTION_BRANCH}" ]; then
 fi
 
 # customs tags
-image_tags="${image_tags} ${application_version}-${image_version}" ;
+image_tags="${image_tags} ${image_version}" ;
 echo "-> use image tags ${image_tags}"
 
 # finals
