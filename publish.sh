@@ -29,19 +29,18 @@ if [[ -z "$DOCKERHUB_REGISTRY_USERNAME" || -z "$DOCKERHUB_REGISTRY_PASSWORD" ]];
 fi
 
 image_version=${VERSION}
-VARIANT_TAG=${VARIANT//\//-}
+VARIANT_TAG=${VARIANT//\//-} ;
 if [[ -n ${VARIANT} ]]; then
-  cd ~/build/Wolvverine/docker-php/${VERSION}/${VARIANT}
-
-  image_building_name="${DOCKER_IMAGE}:${VERSION}-${VARIANT_TAG}"
-  image_tags_prefix="${VERSION}-${VARIANT_TAG}-"
-  echo "-> set image variant '${VARIANT_TAG' for build"
+  cd "~/build/Wolvverine/docker-php/${VERSION}/${VARIANT}";
+  image_building_name="${DOCKER_IMAGE}:${VERSION}-${VARIANT_TAG}";
+  image_tags_prefix="${VERSION}-${VARIANT_TAG}-";
+  echo "-> set image variant '${VARIANT_TAG' for build";
 else
-  image_building_name="${DOCKER_IMAGE}:${VERSION}-${VARIANT_TAG}"
+  image_building_name="${DOCKER_IMAGE}:${VERSION}-${VARIANT_TAG}";
 fi
-echo "-> use image name '${image_building_name}' for publish"
+echo "-> use image name ${image_building_name} for publish";
 
-application_version=`docker inspect -f '{{ index .Config.Labels "application.php.version"}}' ${image_building_name}`
+application_version=`docker inspect -f '{{ index .Config.Labels "application.php.version"}}' ${image_building_name}`;
 
 if [[ -z "$VERSION" ]]; then
   # no fixed application version => latest build
@@ -56,7 +55,7 @@ if [[ -n "${SOURCE_BRANCH}" ]]; then
 elif [[ -n "${TRAVIS_BRANCH}" ]]; then
   VCS_BRANCH="${TRAVIS_BRANCH}"
 else
-  VCS_BRANCH="`git rev-parse --abbrev-ref HEAD`"
+  VCS_BRANCH="`git rev-parse --abbrev-ref HEAD`" ;
 fi
 test -n "${VCS_BRANCH}"
 echo "-> current vcs branch '${VCS_BRANCH}'"
