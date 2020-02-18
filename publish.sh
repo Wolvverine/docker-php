@@ -39,9 +39,11 @@ else
 fi
 echo "-> use image name '${image_building_name}' for publish";
 
-docker inspect "${image_building_name}";
+#docker inspect "${image_building_name}";
 
-application_version=`docker inspect -f '{{ index .Config.Labels "application.php.version"}}' "${image_building_name}"`;
+#application_version=`docker inspect -f '{{ index .Config.Labels "application.php.version"}}' "${image_building_name}"`;
+
+application_version="${VERSION}-${VARIANT_TAG}";
 
 if [[ -z "$VERSION" ]]; then
   # no fixed application version => latest build
