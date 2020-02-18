@@ -11,7 +11,7 @@ PRODUCTION_BRANCH="${PRODUCTION_BRANCH:-master}" ;
 ## Initialization
 set -e -x
 
-if [[ "${DOCKER_REPO}" =~ ([^/]+)/([^/]+) ]]; then
+if [[ ${DOCKER_REPO} =~ ([^/]+)/([^/]+) ]]; then
   username="${BASH_REMATCH[1]}";
   repo="${BASH_REMATCH[2]}";
   echo "-> set username to ${username}";
@@ -26,18 +26,20 @@ if [[ -z "$DOCKERHUB_REGISTRY_USERNAME" || -z "$DOCKERHUB_REGISTRY_PASSWORD" ]];
   exit 1
 fi
 
-image_version="${VERSION}";
-VARIANT_TAG="${VARIANT/\//-}";
+image_version=${VERSION};
+VARIANT_TAG=${VARIANT/\//-};
 
 if [[ -n "${VARIANT}" ]]; then
-  cd "~/build/Wolvverine/docker-php/${VERSION}/${VARIANT}";
+  cd ~/build/Wolvverine/docker-php/${VERSION}/${VARIANT} ;
   image_building_name="${DOCKER_IMAGE}:${VERSION}-${VARIANT_TAG}";
   image_tags_prefix="${VERSION}-${VARIANT_TAG}-";
-  echo "-> set image variant ${VARIANT_TAG for build";
+  echo "-> set image variant '${VARIANT_TAG}' for build";
 else
   image_building_name="${DOCKER_IMAGE}:${VERSION}-${VARIANT_TAG}";
 fi
-echo "-> use image name ${image_building_name} for publish";
+echo "-> use image name '${image_building_name}' for publish";
+
+docker inspect -f '{{ index .Config.Labels "application.php.version"}}' "${image_building_name}";
 
 application_version=`docker inspect -f '{{ index .Config.Labels "application.php.version"}}' ${image_building_name}`;
 
