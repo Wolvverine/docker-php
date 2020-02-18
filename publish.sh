@@ -47,9 +47,9 @@ application_version="${VERSION}-${VARIANT_TAG}";
 
 if [[ -z "$VERSION" ]]; then
   # no fixed application version => latest build
-  image_tags="latest ${application_version}-latest" ;
+  image_tags="latest" ;
 else
-  image_tags="${application_version}-latest" ;
+  image_tags="latest" ;
 fi
 
 # If empty branch, fetch the current from local git repo
