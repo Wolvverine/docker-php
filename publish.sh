@@ -72,14 +72,14 @@ image_tags="${image_tags} ${application_version}-${image_version}"
 echo "-> use image tags '${image_tags}'"
 
 # finals
-image_final_tags=()
-for tag in $image_tags; do
-  image_final_tags+=("${image_tags_prefix}${tag}")
-done
-image_final_tags+=("latest")
-echo -n "${image_final_tags[*]}"
+# image_final_tags=()
+# for tag in $image_tags; do
+#   image_final_tags+=("${image_tags_prefix}${tag}")
+# done
+image_final_tags="7.3-alpine3.11-fpm-latest"
+#echo -n "${image_final_tags[*]}"
 
-image_final_tags=`echo -n "${image_final_tags[*]}" | tr ' ' '\n' | uniq | tr '\n' ' '`
+#image_final_tags=`echo -n "${image_final_tags[*]}" | tr ' ' '\n' | uniq | tr '\n' ' '`
 
 echo "-> use final image tags list '${image_final_tags}'"
 
